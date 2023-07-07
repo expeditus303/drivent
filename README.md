@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# drivent
-=======
 # Driven.t - Back-end
 
 Back-end for Driven.t, an event management solution.
