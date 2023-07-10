@@ -17,7 +17,7 @@ model User {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   Session    Session[]
-  Enrollment Enrollment[]
+  Enrollment Enrollment?
 }
 
 model Session {
@@ -51,7 +51,7 @@ model Enrollment {
   Address   Address[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Ticket    Ticket[]
+  Ticket    Ticket?
 }
 
 model Address {
@@ -84,7 +84,7 @@ model Ticket {
   id           Int          @id @default(autoincrement())
   ticketTypeId Int
   TicketType   TicketType   @relation(fields: [ticketTypeId], references: [id])
-  enrollmentId Int
+  enrollmentId Int          @unique
   Enrollment   Enrollment   @relation(fields: [enrollmentId], references: [id])
   status       TicketStatus
   createdAt    DateTime     @default(now())
