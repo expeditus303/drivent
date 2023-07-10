@@ -15,17 +15,17 @@ async function findWithTicketbyEnrollmentId(enrollmentId: number) {
 }
 
 async function createTicket(ticketData: CreateTicket) {
-    return prisma.ticket.create({
-        data: {
-            ...ticketData
-        }
-    })
+  return prisma.ticket.create({
+    data: {
+      ...ticketData,
+    },
+  });
 }
 
 const ticketsRepository = {
   getTicketsTypes,
   findWithTicketbyEnrollmentId,
-  createTicket
+  createTicket,
 };
 
 export default ticketsRepository;
