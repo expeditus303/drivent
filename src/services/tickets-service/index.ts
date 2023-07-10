@@ -33,27 +33,27 @@ async function createTicket(userId: number, ticketTypeId: number) {
 
   await ticketsRepository.createTicket(ticketData);
 
-  const ticket = await ticketsRepository.findWithTicketbyEnrollmentId(userId);
+  const ticket = await ticketsRepository.findWithTicketbyEnrollmentId(enrollment.id);
 
-  const ticketTest = {
-    id: ticket.id,
-    status: ticket.status,
-    ticketTypeId: ticket.ticketTypeId,
-    enrollmentId: ticket.enrollmentId,
-    TicketType: {
-      id: ticket.TicketType.id,
-      name: ticket.TicketType.name,
-      price: ticket.TicketType.price,
-      isRemote: ticket.TicketType.isRemote,
-      includesHotel: ticket.TicketType.includesHotel,
-      createdAt: ticket.TicketType.createdAt,
-      updatedAt: ticket.TicketType.updatedAt,
-    },
-    createdAt: ticket.createdAt,
-    updatedAt: ticket.updatedAt,
-  };
+  // const ticketTest = {
+  //   id: ticket.id,
+  //   status: ticket.status,
+  //   ticketTypeId: ticket.ticketTypeId,
+  //   enrollmentId: ticket.enrollmentId,
+  //   TicketType: {
+  //     id: ticket.TicketType.id,
+  //     name: ticket.TicketType.name,
+  //     price: ticket.TicketType.price,
+  //     isRemote: ticket.TicketType.isRemote,
+  //     includesHotel: ticket.TicketType.includesHotel,
+  //     createdAt: ticket.TicketType.createdAt,
+  //     updatedAt: ticket.TicketType.updatedAt,
+  //   },
+  //   createdAt: ticket.createdAt,
+  //   updatedAt: ticket.updatedAt,
+  // };
 
-  return ticketTest
+  return ticket
 }
 
 const ticketService = {
