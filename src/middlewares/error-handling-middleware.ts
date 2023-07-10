@@ -8,7 +8,7 @@ export function handleApplicationErrors(
   res: Response,
   _next: NextFunction,
 ) {
-  if (err.name === 'CannotEnrollBeforeStartDateError') {
+  if (err.name === 'BadRequest' || err.name === 'CannotEnrollBeforeStartDateError') {
     return res.status(httpStatus.BAD_REQUEST).send({
       message: err.message,
     });
@@ -37,6 +37,7 @@ export function handleApplicationErrors(
       message: err.message,
     });
   }
+  
 
   /* eslint-disable-next-line no-console */
   console.error(err.name);
