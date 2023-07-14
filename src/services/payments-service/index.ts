@@ -52,4 +52,8 @@ const paymentService = {
     createPayment
 }
 
+<<<<<<< HEAD
 export default paymentService
+=======
+export default paymentService
+>>>>>>> b7f66548db27321ffa92a1e876f920db13e2a88d
