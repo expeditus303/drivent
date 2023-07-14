@@ -3,7 +3,7 @@ import { badRequest } from "@/errors/bad-request-error";
 import { CardDataParams, CreatePaymentBody, CreatePaymentParams } from "@/protocols";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import paymentRepository from "@/repositories/payment-repository"
-import ticketsRepository from "@/repositories/ticket-repository"
+import ticketsRepository from "@/repositories/tickets-repository"
 
 async function getPaymentData(ticketId: number, userId: number){
     const ticket = await ticketsRepository.getTicketById(ticketId)

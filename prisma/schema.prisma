@@ -52,7 +52,7 @@ model Enrollment {
   Address   Address[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Ticket    Ticket?
+  Ticket    Ticket?  
 }
 
 model Address {

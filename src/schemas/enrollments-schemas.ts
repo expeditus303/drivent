@@ -6,7 +6,7 @@ const cpfValidationSchema = Joi.string().length(11).custom(joiCpfValidation).req
 
 const cepValidationSchema = Joi.string().length(9).custom(JoiCepValidation).required();
 
-const mobilePhoneValidationSchema = Joi.string().min(14).max(15).custom(joiMobilePhoneValidation).required();
+const mobilePhoneValidationSchema = Joi.string().min(11).max(15).custom(joiMobilePhoneValidation).required();
 
 export const createEnrollmentSchema = Joi.object<CreateOrUpdateEnrollmentWithAddress>({
   name: Joi.string().min(3).required(),
@@ -51,6 +51,7 @@ function joiMobilePhoneValidation(value: string, helpers: Joi.CustomHelpers<stri
   if (!value) return value;
 
   if (!isValidMobilePhone(value)) {
+    console.log("aqui")
     return helpers.error('any.invalid');
   }
 
