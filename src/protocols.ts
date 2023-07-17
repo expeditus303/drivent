@@ -50,22 +50,24 @@ export type RequestError = {
 export type CreateTicket = Omit<Ticket, 'id' | 'createdAt' | 'updatedAt'>;
 
 export type CreatePaymentBody = {
-	ticketId: number,
-	cardData: {
-		issuer: string,
-    number: number,
-    name: string,
-    expirationDate: Date,
-    cvv: number
-	}
-}
+  ticketId: number;
+  cardData: {
+    issuer: string;
+    number: number;
+    name: string;
+    expirationDate: Date;
+    cvv: number;
+  };
+};
 
-export type CardDataParams =  {
-  issuer: string,
-  number: number,
-  name: string,
-  expirationDate: Date,
-  cvv: number
-}
+export type CardDataParams = {
+  issuer: string;
+  number: number;
+  name: string;
+  expirationDate: Date;
+  cvv: number;
+};
 
-export type CreatePaymentParams = Omit<Payment, 'id' | 'createdAt' | 'updatedAt'>
+export type CreatePaymentParams = Omit<Payment, 'id' | 'createdAt' | 'updatedAt'>;
+
+export type PaymentParams = Omit<Payment, 'id' | 'createdAt' | 'updatedAt'>;

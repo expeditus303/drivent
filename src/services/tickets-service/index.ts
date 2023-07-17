@@ -35,7 +35,7 @@ async function createTicket(userId: number, ticketTypeId: number) {
 
   const ticket = await ticketsRepository.findWithTicketbyEnrollmentId(enrollment.id);
 
-  return ticket
+  return ticket;
 }
 
 const ticketService = {

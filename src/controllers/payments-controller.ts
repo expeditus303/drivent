@@ -21,13 +21,13 @@ export async function getPaymentData(req: AuthenticatedRequest, res: Response, n
 
 export async function createPayment(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const { userId } = req;
-  const { ticketId, cardData } = req.body
+  const { ticketId, cardData } = req.body;
 
-  if(!ticketId || !cardData) return res.sendStatus(httpStatus.BAD_REQUEST)
+  if (!ticketId || !cardData) return res.sendStatus(httpStatus.BAD_REQUEST);
 
   try {
     const payment = await paymentService.createPayment(ticketId, cardData, userId);
-    if (!payment) return res.sendStatus(httpStatus.NOT_FOUND)
+    if (!payment) return res.sendStatus(httpStatus.NOT_FOUND);
 
     res.status(httpStatus.OK).send(payment);
   } catch (error) {

@@ -1,5 +1,6 @@
 import faker from '@faker-js/faker';
 import { prisma } from '@/config';
+import { TicketStatus } from '@prisma/client';
 
 export async function createPayment(ticketId: number, value: number) {
   return prisma.payment.create({
@@ -8,6 +9,17 @@ export async function createPayment(ticketId: number, value: number) {
       value,
       cardIssuer: faker.name.findName(),
       cardLastDigits: faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+    },
+  });
+}
+
+export async function processPayment(ticketId: number) {
+  return prisma.ticket.update({
+    where: {
+      id: ticketId,
+    },
+    data: {
+      status: TicketStatus.PAID,
     },
   });
 }

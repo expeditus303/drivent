@@ -19,30 +19,29 @@ async function validateTicketAndEnrollment(userId: number) {
     throw paymentRequiredError();
   }
 
-  return
+  return;
 }
 
 async function getHotels(userId: number) {
-  validateTicketAndEnrollment(userId);
+  await validateTicketAndEnrollment(userId);
 
   const hotels = await hotelsRepository.getHotels();
+  if(hotels.length === 0) throw notFoundError()
 
   return hotels;
 }
 
-async function getRooms(userId: number, hotelId: number){
-    validateTicketAndEnrollment(userId);
+async function getRooms(userId: number, hotelId: number) {
+  await validateTicketAndEnrollment(userId);
 
-    const rooms = await hotelsRepository.getRooms(hotelId);
-  
-    return rooms;
+  const rooms = await hotelsRepository.getRooms(hotelId);
+
+  return rooms;
 }
-
-
 
 const hotelsService = {
   getHotels,
-  getRooms
+  getRooms,
 };
 
 export default hotelsService;

@@ -36,8 +36,8 @@ export function handleApplicationErrors(
     return res.status(httpStatus.NOT_FOUND).send({
       message: err.message,
     });
-  } 
-  
+  }
+
   if (err.name === 'paymentRequiredError') {
     return res.status(httpStatus.PAYMENT_REQUIRED).send({
       message: err.message,

@@ -9,7 +9,7 @@ export async function getTicketsTypes(req: AuthenticatedRequest, res: Response, 
 
     res.status(httpStatus.OK).send(ticketsType);
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -21,7 +21,7 @@ export async function getUserTicket(req: AuthenticatedRequest, res: Response, ne
 
     res.status(httpStatus.OK).send(userTicket);
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -36,7 +36,7 @@ export async function createTicket(req: AuthenticatedRequest, res: Response, nex
 
     return res.status(httpStatus.CREATED).send(ticket);
   } catch (error) {
-    console.log(error)
-    next(error)
+    console.log(error);
+    next(error);
   }
 }

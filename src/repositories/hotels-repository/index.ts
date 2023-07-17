@@ -1,20 +1,19 @@
-import { prisma } from "@/config";
+import { prisma } from '@/config';
 
-
-function getHotels(){
-    return prisma.hotel.findMany()
+function getHotels() {
+  return prisma.hotel.findMany();
 }
 
-function getRooms(hotelId: number){
-    return prisma.hotel.findFirst({
-        where: {id: hotelId},
-        include: {Rooms: true}
-    })
+function getRooms(hotelId: number) {
+  return prisma.hotel.findFirst({
+    where: { id: hotelId },
+    include: { Rooms: true },
+  });
 }
 
 const hotelsRepository = {
-    getHotels,
-    getRooms
-}
+  getHotels,
+  getRooms,
+};
 
-export default hotelsRepository
+export default hotelsRepository;
