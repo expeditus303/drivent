@@ -35,6 +35,7 @@ async function getRooms(userId: number, hotelId: number) {
   await validateTicketAndEnrollment(userId);
 
   const rooms = await hotelsRepository.getRooms(hotelId);
+  if(!rooms) throw notFoundError()
 
   return rooms;
 }

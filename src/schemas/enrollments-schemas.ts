@@ -51,7 +51,6 @@ function joiMobilePhoneValidation(value: string, helpers: Joi.CustomHelpers<stri
   if (!value) return value;
 
   if (!isValidMobilePhone(value)) {
-    console.log('aqui');
     return helpers.error('any.invalid');
   }
 

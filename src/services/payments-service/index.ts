@@ -44,8 +44,6 @@ async function createPayment(ticketId: number, cardData: CardDataParams, userId:
 
     const teste = await ticketsRepository.processPayment(ticketId)
 
-    console.log(teste)
-
     return payment
 }
 

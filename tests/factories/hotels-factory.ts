@@ -1,44 +1,42 @@
 import faker from '@faker-js/faker';
-import { TicketStatus } from '@prisma/client';
 import { prisma } from '@/config';
 
 export async function createHotels() {
-    const hotels = [];
-    const numberOfHotels = 3;
-  
-    for (let i = 0; i < numberOfHotels; i++) {
-      hotels.push({
-        name: faker.company.companyName(),
-        image: faker.image.cats(),
-      });
-    }
-  
-    return prisma.hotel.createMany({ data: hotels });
+  const hotels = [];
+  const numberOfHotels = 3;
+
+  for (let i = 0; i < numberOfHotels; i++) {
+    hotels.push({
+      name: faker.company.companyName(),
+      image: faker.image.cats(),
+    });
   }
 
-type TicketType = 'isRemote' | 'hasHotel' | 'hasNotHotel'
-
-export async function createTicketType(hotel?: TicketType) {
-  const isRemote = hotel === 'isRemote';
-  const includesHotel = hotel === 'hasHotel';
-  const doesNotIncludeHotel = hotel === 'hasNotHotel'
-
-  return prisma.ticketType.create({
-    data: {
-      name: faker.name.findName(),
-      price: faker.datatype.number(),
-      isRemote: includesHotel ? false : isRemote ? true : faker.datatype.boolean(),
-      includesHotel: includesHotel ? true : doesNotIncludeHotel ? false : faker.datatype.boolean(),
-    },
-  });
+  return prisma.hotel.createMany({ data: hotels });
 }
 
-export async function createTicket(enrollmentId: number, ticketTypeId: number, status: TicketStatus) {
-  return prisma.ticket.create({
-    data: {
-      enrollmentId,
-      ticketTypeId,
-      status,
-    },
-  });
+export async function createHotel() {
+    return prisma.hotel.create({
+        data: {
+            name: 'Majestic Palace Hotel',
+            image: 'https://loremflickr.com/cache/resized/65535_52714272205_d367518fbd_b_640_480_nofilter.jpg'
+        }
+    })
+}
+
+export async function createRooms(hotelId: number) {
+    const rooms = [];
+    const numberOfRooms = 3;
+  
+    for (let i = 0; i < numberOfRooms; i++) {
+        const name = faker.company.companyName()
+        const capacity = faker.datatype.number({min: 1, max: 5})
+        rooms.push({
+        name, 
+        capacity,
+        hotelId,
+      });
+    }
+
+    return prisma.room.createMany({ data: rooms})
 }
