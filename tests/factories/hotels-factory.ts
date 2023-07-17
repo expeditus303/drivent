@@ -16,27 +16,27 @@ export async function createHotels() {
 }
 
 export async function createHotel() {
-    return prisma.hotel.create({
-        data: {
-            name: 'Majestic Palace Hotel',
-            image: 'https://loremflickr.com/cache/resized/65535_52714272205_d367518fbd_b_640_480_nofilter.jpg'
-        }
-    })
+  return prisma.hotel.create({
+    data: {
+      name: 'Majestic Palace Hotel',
+      image: 'https://loremflickr.com/cache/resized/65535_52714272205_d367518fbd_b_640_480_nofilter.jpg',
+    },
+  });
 }
 
 export async function createRooms(hotelId: number) {
-    const rooms = [];
-    const numberOfRooms = 3;
-  
-    for (let i = 0; i < numberOfRooms; i++) {
-        const name = faker.company.companyName()
-        const capacity = faker.datatype.number({min: 1, max: 5})
-        rooms.push({
-        name, 
-        capacity,
-        hotelId,
-      });
-    }
+  const rooms = [];
+  const numberOfRooms = 3;
 
-    return prisma.room.createMany({ data: rooms})
+  for (let i = 0; i < numberOfRooms; i++) {
+    const name = faker.company.companyName();
+    const capacity = faker.datatype.number({ min: 1, max: 5 });
+    rooms.push({
+      name,
+      capacity,
+      hotelId,
+    });
+  }
+
+  return prisma.room.createMany({ data: rooms });
 }
