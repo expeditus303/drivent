@@ -266,7 +266,7 @@ describe('GET /hotels/:hotelId', () => {
 
       const response = await server.get(`/hotels/${hotel.id - 1}`).set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(httpStatus.NOT_FOUND);      
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
 
     it('should respond with status 200 and hotel with rooms', async () => {
@@ -300,8 +300,8 @@ describe('GET /hotels/:hotelId', () => {
               updatedAt: expect.any(String),
             }),
           ]),
-        })
-      );      
+        }),
+      );
     });
 
     it('should respond with status 200 and hotel with no rooms', async () => {
@@ -324,9 +324,9 @@ describe('GET /hotels/:hotelId', () => {
           image: hotel.image,
           createdAt: hotel.createdAt.toISOString(),
           updatedAt: hotel.updatedAt.toISOString(),
-          Rooms: []
-        })
-      );      
+          Rooms: [],
+        }),
+      );
     });
   });
 });
