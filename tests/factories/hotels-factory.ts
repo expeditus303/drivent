@@ -40,3 +40,16 @@ export async function createRooms(hotelId: number) {
 
   return prisma.room.createMany({ data: rooms });
 }
+
+export async function createRoom(hotelId: number) {
+    const name = faker.company.companyName();
+    const capacity = faker.datatype.number({ min: 1, max: 5 });
+
+    const roomData = {
+      name,
+      capacity,
+      hotelId,
+    };
+
+  return prisma.room.create({ data: roomData });
+}

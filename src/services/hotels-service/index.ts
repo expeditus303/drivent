@@ -4,7 +4,7 @@ import enrollmentRepository from '@/repositories/enrollment-repository';
 import hotelsRepository from '@/repositories/hotels-repository';
 import ticketsRepository from '@/repositories/tickets-repository';
 
-async function validateTicketAndEnrollment(userId: number) {
+async function listHotels(userId: number) {
   const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
   if (!enrollment) throw notFoundError();
 
@@ -23,7 +23,7 @@ async function validateTicketAndEnrollment(userId: number) {
 }
 
 async function getHotels(userId: number) {
-  await validateTicketAndEnrollment(userId);
+  await listHotels(userId);
 
   const hotels = await hotelsRepository.getHotels();
   if(hotels.length === 0) throw notFoundError()
@@ -32,7 +32,7 @@ async function getHotels(userId: number) {
 }
 
 async function getRooms(userId: number, hotelId: number) {
-  await validateTicketAndEnrollment(userId);
+  await listHotels(userId);
 
   const rooms = await hotelsRepository.getRooms(hotelId);
   if(!rooms) throw notFoundError()
