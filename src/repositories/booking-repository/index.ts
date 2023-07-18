@@ -7,8 +7,27 @@ function getBookings(userId: number) {
   });
 }
 
-const bookingsRepository = {
+function getBookingsCount(roomId: number){
+  return prisma.booking.count({
+    where: {
+      roomId
+    }
+  });
+}
+
+function createBooking(userId: number, roomId: number) {
+  return prisma.booking.create({
+    data: {
+      userId,
+      roomId
+    }
+  })
+}
+
+const bookingRepository = {
   getBookings,
+  getBookingsCount,
+  createBooking
 };
 
-export default bookingsRepository;
+export default bookingRepository;
