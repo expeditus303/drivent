@@ -20,6 +20,26 @@ async function getBookings(userId: number) {
 }
 
 async function createBooking(userId: number, roomId: number) {
+  await validateTicket(userId, roomId)
+
+  const booking = await bookingRepository.createBooking(userId, roomId);
+
+  const bookingId = { bookingId: booking.id };
+
+  return bookingId;
+}
+
+async function editBooking(userId: number, roomId: number, bookingId: number) {
+  await validateTicket(userId, roomId)
+
+  const booking = await bookingRepository.editBooking(userId, bookingId, roomId);
+
+  const updatedBookingId = { bookingId: booking.id };
+
+  return updatedBookingId;
+}
+
+async function validateTicket(userId: number, roomId: number) {
   const ticketData = await enrollmentRepository.getEnrollmentWithTicketAndTicketType(userId);
 
   const { status } = ticketData.Ticket;
@@ -34,21 +54,18 @@ async function createBooking(userId: number, roomId: number) {
   const roomData = await roomRepository.getRoomData(roomId);
   if (!roomData) throw notFoundError();
 
-  const bookingsCount = await bookingRepository.getBookingsCount(roomId)
-  
-  const { capacity } = roomData
-  if(capacity <= bookingsCount) throw forbiddenError()
+  const bookingsCount = await bookingRepository.getBookingsCount(roomId);
 
-  const booking = await bookingRepository.createBooking(userId, roomId)
+  const { capacity } = roomData;
+  if (capacity <= bookingsCount) throw forbiddenError();
 
-  const bookingId = { bookingId: booking.id };
-
-  return bookingId
+  return
 }
 
 const bookingsService = {
   getBookings,
   createBooking,
+  editBooking,
 };
 
 export default bookingsService;

@@ -7,11 +7,11 @@ function getBookings(userId: number) {
   });
 }
 
-function getBookingsCount(roomId: number){
+function getBookingsCount(roomId: number) {
   return prisma.booking.count({
     where: {
-      roomId
-    }
+      roomId,
+    },
   });
 }
 
@@ -19,15 +19,27 @@ function createBooking(userId: number, roomId: number) {
   return prisma.booking.create({
     data: {
       userId,
+      roomId,
+    },
+  });
+}
+
+function editBooking(userId: number, bookingId: number, roomId: number) {
+  return prisma.booking.update({
+    where: {
+      id: bookingId
+    },
+    data: {
       roomId
     }
-  })
+  });
 }
 
 const bookingRepository = {
   getBookings,
   getBookingsCount,
-  createBooking
+  createBooking,
+  editBooking
 };
 
 export default bookingRepository;
