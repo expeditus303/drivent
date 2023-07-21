@@ -32,6 +32,10 @@ async function createBooking(userId: number, roomId: number) {
 async function editBooking(userId: number, roomId: number, bookingId: number) {
   await validateTicket(userId, roomId)
 
+  const bookingExists = await bookingRepository.findBookingByBookingId(bookingId)
+
+  if (bookingExists.userId !== userId || !bookingExists) throw forbiddenError()
+
   const booking = await bookingRepository.editBooking(userId, bookingId, roomId);
 
   const updatedBookingId = { bookingId: booking.id };
