@@ -9,11 +9,9 @@ import {
   createTicketType,
   createTicket,
   createPayment,
-  generateCreditCardData,
   processPayment,
 } from '../factories';
 import { cleanDb, generateValidToken } from '../helpers';
-import { prisma } from '@/config';
 import app, { init } from '@/app';
 import { createHotel, createHotels, createRooms } from '../factories/hotels-factory';
 

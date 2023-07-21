@@ -52,6 +52,7 @@ async function validateTicket(userId: number, roomId: number) {
   if (!isPaid || !inPersonTicket || !hasHotelIncluded) throw forbiddenError();
 
   const roomData = await roomRepository.getRoomData(roomId);
+
   if (!roomData) throw notFoundError();
 
   const bookingsCount = await bookingRepository.getBookingsCount(roomId);
