@@ -1,5 +1,6 @@
 import { AuthenticatedRequest } from '@/middlewares';
-import bookingsService from '@/services/bookings-service';
+import bookingsService from '@/services/booking-service';
+
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status';
 

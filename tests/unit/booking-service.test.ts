@@ -1,8 +1,9 @@
 import bookingRepository from '@/repositories/booking-repository';
 import enrollmentRepository from '@/repositories/enrollment-repository';
 import roomRepository from '@/repositories/room-repository';
-import bookingsService from '@/services/bookings-service';
+
 import { mockData, mockRoomData } from '../factories/booking-factory';
+import bookingsService from '@/services/booking-service';
 
 const userId = 2;
 const roomId = 6;
