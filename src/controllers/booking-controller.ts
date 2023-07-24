@@ -34,9 +34,9 @@ export async function editBooking(req: AuthenticatedRequest, res: Response, next
   const { roomId } = req.body;
   const { bookingId } = req.params
    
-  const updatedBookingId = await bookingsService.editBooking(userId, roomId, Number(bookingId))
-
+  
   try {
+    const updatedBookingId = await bookingsService.editBooking(userId, roomId, Number(bookingId))
     res.status(httpStatus.OK).send(updatedBookingId)
   } catch (error) {
     next(error)
