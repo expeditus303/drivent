@@ -33,9 +33,10 @@ async function editBooking(userId: number, roomId: number, bookingId: number) {
   await validateTicket(userId, roomId)
 
   const bookingExists = await bookingRepository.findBookingById(bookingId)
-  console.log(bookingExists);
 
-  if (bookingExists?.userId !== userId || !bookingExists) throw forbiddenError()
+  if (!bookingExists) throw forbiddenError()
+
+  if (bookingExists.userId !== userId ) throw forbiddenError()
 
   const booking = await bookingRepository.editBooking(userId, bookingId, roomId);
 
@@ -49,6 +50,7 @@ async function validateTicket(userId: number, roomId: number) {
   const ticketData = await enrollmentRepository.getEnrollmentWithTicketAndTicketType(userId);
 
   if(!ticketData.Ticket) throw notFoundError()
+  if(!ticketData.Ticket.TicketType) throw notFoundError()
 
   const { status } = ticketData.Ticket;
   const { isRemote, includesHotel } = ticketData.Ticket.TicketType;
