@@ -103,15 +103,13 @@ describe('POST /booking', () => {
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketType('hasHotel');
-      console.log(ticketType);
       const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
-      console.log(ticket);
       await createPayment(ticket.id, ticketType.price);
       await processPayment(ticket.id);
       const hotel = await createHotel();
       const room = await createRoom(hotel.id);
       // const room2 = await createRoom(hotel.id);
-      const booking = await createBooking(user.id, room.id);
+      // const booking = await createBooking(user.id, room.id);
       // const updateBooking = await updateBooking(user.id, room2.id, booking.id)
 
       const body = {
@@ -119,6 +117,40 @@ describe('POST /booking', () => {
       };
 
       const response = await server.post(`/booking`).set('Authorization', `Bearer ${token}`).send(body);
+
+      expect(response.status).toEqual(httpStatus.OK);
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          bookingId: expect.any(Number)
+        }),
+      );
+    });
+  });
+});
+
+describe('PUT /booking', () => {
+  whenTokenIsInvalid();
+
+  describe('when token is valid', () => {
+
+    it('should respond with status 200 and created booking id', async () => {
+      const user = await createUser();
+      const token = await generateValidToken(user);
+      const enrollment = await createEnrollmentWithAddress(user);
+      const ticketType = await createTicketType('hasHotel');
+      const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
+      await createPayment(ticket.id, ticketType.price);
+      await processPayment(ticket.id);
+      const hotel = await createHotel();
+      const room = await createRoom(hotel.id);
+      const room2 = await createRoom(hotel.id);
+      const booking = await createBooking(user.id, room.id);
+
+      const body = {
+        roomId: room2.id,
+      };
+
+      const response = await server.put(`/booking/${booking.id}`).set('Authorization', `Bearer ${token}`).send(body);
 
       expect(response.status).toEqual(httpStatus.OK);
       expect(response.body).toEqual(

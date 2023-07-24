@@ -10,17 +10,6 @@ export async function createBooking(userId: number, roomId: number) {
   })
 }
 
-// export async function updateBooking(userId: number, roomId: number) {
-//   return prisma.booking.update({
-//     where: {
-//       id: bookingId
-//     },
-//     data: {
-//       roomId
-//     }
-//   });
-// }
-
 export function mockData(userId: number, ticketStatus: string, isRemote: boolean, includesHotel: boolean) {
   return {
     id: 2,
