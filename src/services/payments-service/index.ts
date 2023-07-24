@@ -41,7 +41,7 @@ async function createPayment(ticketId: number, cardData: CardDataParams, userId:
 
   const payment = await paymentRepository.createPayment(paymentData);
 
-  const teste = await ticketsRepository.processPayment(ticketId);
+  await ticketsRepository.processPayment(ticketId);
 
   return payment;
 }

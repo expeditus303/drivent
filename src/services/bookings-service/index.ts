@@ -9,7 +9,7 @@ async function getBookings(userId: number) {
   if (!booking) throw notFoundError();
 
   const { id, Room } = booking;
-  const { id: roomId, name, capacity, hotelId } = Room;
+  const { id: roomId, name, capacity, hotelId,  } = Room;
 
   const bookingFormatted = {
     id,
@@ -32,7 +32,7 @@ async function createBooking(userId: number, roomId: number) {
 async function editBooking(userId: number, roomId: number, bookingId: number) {
   await validateTicket(userId, roomId)
 
-  const bookingExists = await bookingRepository.findBookingByBookingId(bookingId)
+  const bookingExists = await bookingRepository.findBookingById(bookingId)
 
   if (bookingExists.userId !== userId || !bookingExists) throw forbiddenError()
 
@@ -44,7 +44,10 @@ async function editBooking(userId: number, roomId: number, bookingId: number) {
 }
 
 async function validateTicket(userId: number, roomId: number) {
+
   const ticketData = await enrollmentRepository.getEnrollmentWithTicketAndTicketType(userId);
+
+  if(!ticketData.Ticket) throw notFoundError()
 
   const { status } = ticketData.Ticket;
   const { isRemote, includesHotel } = ticketData.Ticket.TicketType;
@@ -60,7 +63,7 @@ async function validateTicket(userId: number, roomId: number) {
   if (!roomData) throw notFoundError();
 
   const bookingsCount = await bookingRepository.getBookingsCount(roomId);
-
+  
   const { capacity } = roomData;
   if (capacity <= bookingsCount) throw forbiddenError();
 

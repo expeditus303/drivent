@@ -87,7 +87,12 @@ describe('GET /booking', () => {
       expect(response.body).toEqual(
         expect.objectContaining({
           id: booking.id,
-          Room: room,
+          Room: {
+            id: room.id,
+            name: room.name,
+            capacity: room.capacity,
+            hotelId: room.hotelId,
+          },
         }),
       );
     });

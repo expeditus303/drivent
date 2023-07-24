@@ -24,7 +24,7 @@ function createBooking(userId: number, roomId: number) {
   });
 }
 
-function findBookingByBookingId(bookingId) {
+function findBookingById(bookingId: number) {
   return prisma.booking.findUnique({
     where: {
       id: bookingId
@@ -47,7 +47,7 @@ const bookingRepository = {
   getBookings,
   getBookingsCount,
   createBooking,
-  findBookingByBookingId,
+  findBookingById,
   editBooking
 };
 

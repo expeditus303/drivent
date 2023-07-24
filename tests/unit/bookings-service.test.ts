@@ -21,6 +21,7 @@ let mockBookingRepo: jest.SpyInstance;
 let mockBookingCountRepo: jest.SpyInstance;
 let mockBookingCreateRepo: jest.SpyInstance;
 let mockBookingEditRepo: jest.SpyInstance;
+let mockFindBookingById: jest.SpyInstance
 
 beforeEach(() => {
   mockEnrollmentRepo = jest.spyOn(enrollmentRepository, 'getEnrollmentWithTicketAndTicketType');
@@ -29,6 +30,7 @@ beforeEach(() => {
   mockBookingCountRepo = jest.spyOn(bookingRepository, 'getBookingsCount');
   mockBookingCreateRepo = jest.spyOn(bookingRepository, 'createBooking');
   mockBookingEditRepo = jest.spyOn(bookingRepository, 'editBooking');
+  mockFindBookingById = jest.spyOn(bookingRepository, 'findBookingById')
 });
 
 describe('bookingsService unit test suite', () => {
@@ -111,15 +113,58 @@ describe('bookingsService unit test suite', () => {
   describe('editBooking service', () => {
     validateTicket();
 
+    it('should throw forbiddenError() if "booking user id" isnt equal to "user id"', async () => {
+      const roomCapacity = 2;
+      const bookingsCount = 1;
+      const bookingId = 3;
+      const updatedRoomId = 5;
+      const resultBookingById = {
+        id: 4,
+        userId: 1,
+        roomId: 6,
+        createdAt: '2023-07-18T15:20:57.041Z',
+        updatedAt: '2023-07-24T13:06:16.764Z'
+      };
+    
+      mockEnrollmentRepo.mockResolvedValue(mockData(userId, 'PAID', false, true));
+      mockRoomRepo.mockResolvedValue(mockRoomData(userId, updatedRoomId, roomCapacity));
+      mockBookingCountRepo.mockResolvedValue(bookingsCount);
+      mockFindBookingById.mockResolvedValue(resultBookingById);
+    
+      let error;
+    
+      try {
+        await bookingsService.editBooking(userId, updatedRoomId, bookingId);
+      } catch (err) {
+        error = err;
+      }
+    
+      expect(mockEnrollmentRepo).toHaveBeenCalledWith(userId);
+      expect(mockRoomRepo).toHaveBeenCalledWith(updatedRoomId);
+      expect(mockBookingCountRepo).toHaveBeenCalledWith(updatedRoomId);
+      expect(mockFindBookingById).toHaveBeenCalledWith(bookingId);
+      expect(error).toBeDefined();
+      expect(error).toEqual(forbiddenError);
+    });
+    
+    
     it('should edit a booking', async () => {
       const roomCapacity = 2;
       const bookingsCount = 1;
       const bookingId = 3;
       const updatedRoomId = 5
+      const resultBookingById = {
+        id: 4,
+        userId: 2,
+        roomId: 6,
+        createdAt: '2023-07-18T15:20:57.041Z',
+        updatedAt: '2023-07-24T13:06:16.764Z'
+      }
 
       mockEnrollmentRepo.mockResolvedValue(mockData(userId, 'PAID', false, true));
       mockRoomRepo.mockResolvedValue(mockRoomData(userId, updatedRoomId, roomCapacity));
       mockBookingCountRepo.mockResolvedValue(bookingsCount);
+      mockFindBookingById.mockResolvedValue(resultBookingById)
       
       mockBookingEditRepo.mockResolvedValue({
           id: bookingId,
@@ -135,6 +180,7 @@ describe('bookingsService unit test suite', () => {
       expect(mockEnrollmentRepo).toHaveBeenCalledWith(userId);
       expect(mockRoomRepo).toHaveBeenCalledWith(updatedRoomId);
       expect(mockBookingCountRepo).toHaveBeenCalledWith(updatedRoomId);
+      expect(mockFindBookingById).toHaveBeenCalledWith(bookingId);
       expect(mockBookingEditRepo).toHaveBeenCalledWith(userId, bookingId, updatedRoomId);
       expect(booking).toEqual({bookingId});
     });
